@@ -3,6 +3,7 @@ run_analysis <- function() {
       # -------------- STEP 1
       # Merges the training and the test sets to create one data set.
       
+      # read all the stuff
       dataSetTest <- read.table("UCI HAR Dataset\\test\\X_test.txt")
       dataLabelsTest <- read.table("UCI HAR Dataset\\test\\y_test.txt")
       dataSubjectTest <- read.table("UCI HAR Dataset\\test\\subject_test.txt")
@@ -11,12 +12,12 @@ run_analysis <- function() {
       dataSubjectTrain <- read.table("UCI HAR Dataset\\train\\subject_train.txt")
       
 
-      #First Col: Who; Second Col: What; Else: Data
-      allTest <- cbind(dataSubjectTest, dataLabelsTest, dataSetTest)
-      allTrain <- cbind(dataSubjectTrain, dataLabelsTrain, dataSetTrain)
+      #First Col: Who (Subject); Second Col: What (Activity); Else: Data
+      allTest <- cbind(dataSubjectTest, dataLabelsTest, dataSetTest) # 2947 of 563
+      allTrain <- cbind(dataSubjectTrain, dataLabelsTrain, dataSetTrain) # 7352 of 563
 
       # Now make the whole Dataset to attach Train below Test
-      cplData <- rbind(allTest, allTrain)
+      cplData <- rbind(allTest, allTrain) # 10299 of 563
       
 
       # ---------------------------- STEP 2
@@ -25,15 +26,14 @@ run_analysis <- function() {
       # Get labels for Data
       dataFeatures <- read.table("UCI HAR Dataset\\features.txt")
       
-      # extract all Column -Numbers that have std() or mean()  // should be 79
-      # fetch std() mean() but also meanFreq() 
-      # as the angle contains Mean with capital letter I get only necessary measures
-      relevantFeatures <- subset(dataFeatures, grepl("std", dataFeatures$V2) |  grepl("mean", dataFeatures$V2))
+      # extract all Column -Numbers that have std() or mean()  // should be 66
+      relevantFeatures <- subset(dataFeatures, grepl("std\\(\\)", dataFeatures$V2) |  grepl("mean\\(\\)", dataFeatures$V2))
       
-      #make a subset with only relevant Columns
-      #Need No 1 (Subject), 2 (Activity), Else: alls std and mean (have to be shifted as we have 2 additional rows)
-      subset <- cplData[,c(1,2,relevantFeatures$V1 + 2)]
+      #make a subset with only relevant Columns that were extracted before
+      #Need No 1 (Subject), 2 (Activity), Else: all std and mean (have to be shifted as we have 2 additional rows)
+      subset <- cplData[,c(1,2,relevantFeatures$V1 + 2)] # 10299 of 68
  
+      
       # ----------------------------- STEP 3
       # Uses descriptive activity names to name the activities in the data set
       
@@ -52,21 +52,22 @@ run_analysis <- function() {
       # ------------------------------- STEP 4
       # Appropriately labels the data set with descriptive variable names. 
       
-      # Now the data get descriptive Names instead of V1 .. V52
-      # Decided to replave abbreviations with complete names
+      # Now the data get descriptive Names instead of V1, V2 ...
+      # Decided to replace abbreviations with complete names
       relevantFeatures[[2]] <- sub("tBody", "timeBody", relevantFeatures[[2]])
+      relevantFeatures[[2]] <- sub("tGravity", "timeGravity", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("fBody", "frequencyBody", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("Mag", "Magnitude", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("Acc", "Acceleration", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("Gyro", "Gyroscope", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("mean", "Mean", relevantFeatures[[2]])
-      # As std ist very common I decided to leave it to save a bit space
+      # As std ist very common I decided to leave it abbreviated to save a bit space
       relevantFeatures[[2]] <- sub("std", "StdDeviation", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("\\(\\)", "", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("\\-", "", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("Freq", "Frequency", relevantFeatures[[2]])
       
-      
+      # Now put it together and place the names in the subset-matrix
       colNames <- c("Subject", "Activity", relevantFeatures[[2]])
       colnames(subset) <- colNames
       
@@ -79,13 +80,15 @@ run_analysis <- function() {
       # to have it easier I use a dataTable
       library(data.table)
       dt<- data.table(subset)
+      
+      # calculate the average by making a unique subject / activity set
       tidyMean<- dt[, lapply(.SD, mean), by=c("Subject", "Activity")]
       
-      # To check if every Subject has 6 entries I order it
+      # To check by inspecting if every Subject has 6 entries I order it
       tidyMean <- tidyMean[order(tidyMean$Subject),]
       
       # ------------------------------ FINISH 
-      # writeTableOut as .txt
+      # write Table out as .txt
       # write.table() using row.name=FALSE
       
       write.table(tidyMean, "tidyAverage.txt", row.names = FALSE)
