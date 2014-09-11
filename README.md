@@ -7,7 +7,7 @@ The Project was to tidy up a dataset.
 
 ### Instructions
 
-Unfortunately, due to GitHub limations, this repository isn't self-contained, the train/ and test/ directories are deliberately empty and you have to follow this more cumbersome procedure:
+To run the analysis you have to follow several steps as this repository has no data. 
 
 1. Clone the Repo https://github.com/ClaRaBo/GalaxyTidyData to get the file run_analysis.R.
 
