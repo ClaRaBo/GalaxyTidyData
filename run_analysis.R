@@ -65,6 +65,7 @@ run_analysis <- function() {
       relevantFeatures[[2]] <- sub("std", "StdDeviation", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("\\(\\)", "", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("\\-", "", relevantFeatures[[2]])
+      relevantFeatures[[2]] <- sub("\\-", "", relevantFeatures[[2]])
       relevantFeatures[[2]] <- sub("Freq", "Frequency", relevantFeatures[[2]])
       
       # Now put it together and place the names in the subset-matrix
@@ -101,10 +102,3 @@ run_analysis <- function() {
       
       
       
-      
-      
-      
-      
-      
-      
-}

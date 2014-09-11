@@ -23,15 +23,19 @@ To run the analysis you have to follow several steps as this repository has no d
 
 ### Overwiew of tidy-up steps
 
-1. The dataset contains train and test data as well as info about the subject and activity. First the data is connected with the subject and activity into column-wise. After this the train and test data is connected row-wise.
+A detailed version is found in the Codebook.md
 
-2. Then it extracts only the measurements on the mean and standard deviation for each measurement. 
+Overview:
 
-3. Descriptive activity names to name the activities in the data set are given.
+1. The dataset contains train and test data as well as info about the subject and activity. First the data is read and  connected column-wise with the subject and activity. After this the train and test data is connected row-wise.
 
-4. The dataset columns get appropriate labels with descriptive variable names. 
+2. Then I extract only the measurements of the mean and standard deviation for each measurement. Subject and activity will stay, too. 
 
-5. From the data set in step 4, a second, independent tidy data set with the average of each variable for each activity and each subject is created an written to a file.
+3. Descriptive activity names like Walking are given to name the activities in the data, that are still numbers [1..6].
+
+4. The dataset columns get appropriate labels with descriptive variable names. For detailed info look at the column-names in the CodeBook.
+
+5. From the data set created in step 4, a second, independent tidy data set with the average of each variable for each activity and each subject is summarized an written to a file.
 
 ### CodeBook 
 
