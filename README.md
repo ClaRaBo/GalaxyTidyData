@@ -19,7 +19,7 @@ To run the analysis you have to follow several steps as this repository has no d
 
 5. Run the file with run_analysis()
 
-6. A tidy ouput file called tidymeans.txt will be generated in the Workspace folder. It contains the averages of each user and each activity.
+6. A tidy ouput file called tidAverage.txt will be generated in the Workspace folder. It contains the averages of each user and each activity.
 
 ### Overwiew of tidy-up steps
 
