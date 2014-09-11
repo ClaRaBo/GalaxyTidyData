@@ -9,7 +9,7 @@ The Project was to tidy up a dataset.
 
 To run the analysis you have to follow several steps as this repository has no data. 
 
-1. Clone the Repo https://github.com/ClaRaBo/GalaxyTidyData to get the file run_analysis.R.
+1. Clone the Repo https://github.com/ClaRaBo/GalaxyTidyData to get the file run_analysis.R. When you have the folder on your own PC follow step 2.
 
 2. Download the data from https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
