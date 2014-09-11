@@ -64,7 +64,8 @@ These signals were used to estimate variables of the feature vector for each pat
 
 
 ## Info about summary choices
-No summaries were done
+In step 5 (see below) a tidy data set with the average of each variable for each activity and each subject was created. I exptect to get 180 datasets as there are 30 subjects an each has 6 activities.
+The dataset is grouped by subject and activity, then the mean / deviation is calculated for every feature.
 
 ## Instructions list
 ### STEP 1: Merges the training and the test sets to create one data set.
